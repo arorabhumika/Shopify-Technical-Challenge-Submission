@@ -1,0 +1,95 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inventory Management System</title>
+  </head>
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+  <body>
+    <h1>Manage your Inventory!</h1>
+
+    <form action="/insertItem" method="POST">
+      <input type="text" placeholder="name" name="name" />
+      <input type="text" placeholder="stock" name="stock" />
+      <input type="text" placeholder="incoming stock" name="incoming_stock" />
+      <button type="submit">Add</button>
+    </form>
+     <script src="/main.js"></script>
+  </body>
+<h2> Inventory </h2>
+
+<ul class="inventory">
+  <!-- Loop through inventory -->
+<table style="width:100%">
+<tr>
+  <td>Code</td>
+  <td>Name</td>
+  <td>Stock</td>
+  <td>Incoming Stock</td>
+   </tr>
+  <% for(var i = 0; i < inventory.length; i++) {%>
+    <%if ( !inventory[i].isDeleted ) { %>
+    <tr>
+        <td><%= inventory[i]._id %></td>
+        <td><%= inventory[i].name %></td>
+        <td><%= inventory[i].stock %></td>
+        <td><%= inventory[i].incoming_stock%></td>
+    </tr>
+   <% } %>
+    
+  <% } %>
+</table>
+</ul>
+
+
+<form action="/editItem" method="POST">
+  <input type="text" placeholder="code" name="code" />
+  <input type="text" placeholder="stock" name="stock" />
+  <input type="text" placeholder="incoming stock" name="incoming_stock" />
+  <button type="submit">Update</button>
+</form>
+
+
+<form action="/deleteItem" method="POST">
+  <input type="text" placeholder="code" name="code" />
+  <input type="textarea" placeholder="comment" name="comment" />
+  <button type="submit">Delete</button>
+</form>
+
+
+<ul class="deletedInventory">
+  <!-- Loop through inventory -->
+<table style="width:100%">
+<tr>
+      <td>Code</td>  
+      <td>Name</td>
+      <td>Stock</td>
+      <td>Incoming Stock</td>
+      <td>Comment</td>
+   </tr>
+  <% for(var i = 0; i < inventory.length; i++) {%>
+    <%if ( inventory[i].isDeleted ) { %>
+    <tr>
+        <td><%= inventory[i]._id %></td>
+        <td><%= inventory[i].name %></td>
+        <td><%= inventory[i].stock %></td>
+        <td><%= inventory[i].incoming_stock%></td>
+        <td><%= inventory[i].reason_delete%></td>
+    </tr>
+   <% } %>
+    
+  <% } %>
+</table>
+</ul>
+
+<form action="/restoreItem" method="POST">
+  <input type="text" placeholder="code" name="code" />
+  <button type="submit">Restore</button>
+</form>
+
+
+</html>
